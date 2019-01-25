@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pyj.mapper.UserMapper">
+    <!--    result maps     -->
+    <resultMap type="com.pyj.entity.User" id="UserMapper" >
+        <id property="id" column="id" />
+        <result property="uName" column="uName" />
+        <result property="password" column="password" />
+        <result property="uType" column="uType" />
+        <result property="uStates" column="uStates" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+		`id`, `uName`,`password`,`uType`,`uStates`
+	</sql>
+
+    <select id="userAll" resultMap="UserMapper">
+        select (<include refid = "Base_Column_List"/>)
+        FROM `user`
+    </select>
+
+    <select id="userLogin" parameterMap="com.pyj.entity.User" resultMap="UserMapper">
+        SELECT (<include refid = "Base_Column_List"/>)
+        FROM `user`
+        WHERE uName = #{uName,jdbcType=VARCHAR}
+    </select>
+
+</mapper>
